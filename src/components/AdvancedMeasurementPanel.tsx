@@ -101,18 +101,20 @@ const AdvancedMeasurementPanel: React.FC<AdvancedMeasurementPanelProps> = ({
   if (isCollapsed) {
     return (
       <motion.div
-        className="fixed bottom-4 right-4 z-20 bg-slate-800/90 backdrop-blur-sm border border-slate-700 rounded-xl p-3"
+        className="fixed bottom-6 right-6 z-20 bg-slate-800/95 backdrop-blur-md border border-slate-700/60 rounded-2xl p-4 shadow-2xl"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        whileHover={{ scale: 1.02 }}
+        whileHover={{ scale: 1.05, y: -2 }}
       >
         <button
           onClick={onToggleCollapse}
-          className="flex items-center space-x-2 text-white hover:text-cyan-400 transition-colors"
+          className="flex items-center space-x-3 text-white hover:text-cyan-400 transition-colors"
         >
-          <Ruler className="w-5 h-5" />
-          <span className="font-medium">{measurements.length}</span>
-          <ChevronUp className="w-4 h-4" />
+          <div className="w-8 h-8 bg-orange-600/30 rounded-lg flex items-center justify-center">
+            <Ruler className="w-4 h-4" />
+          </div>
+          <span className="font-bold text-lg">{measurements.length}</span>
+          <ChevronUp className="w-5 h-5" />
         </button>
       </motion.div>
     );
@@ -120,45 +122,47 @@ const AdvancedMeasurementPanel: React.FC<AdvancedMeasurementPanelProps> = ({
 
   return (
     <motion.div
-      className="fixed bottom-4 right-4 z-20 bg-slate-800/90 backdrop-blur-sm border border-slate-700 rounded-xl overflow-hidden max-w-sm"
+      className="fixed bottom-6 right-6 z-20 bg-slate-800/95 backdrop-blur-md border border-slate-700/60 rounded-2xl overflow-hidden max-w-md shadow-2xl"
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 20, scale: 0.95 }}
       layout
     >
       {/* Header */}
-      <div className="p-4 border-b border-slate-700">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-white font-semibold flex items-center">
-            <Ruler className="w-5 h-5 mr-2 text-cyan-400" />
+      <div className="p-6 border-b border-slate-700/60 bg-slate-900/50">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-white font-bold text-lg flex items-center">
+            <div className="w-8 h-8 bg-orange-600/30 rounded-lg flex items-center justify-center mr-3">
+              <Ruler className="w-4 h-4 text-orange-400" />
+            </div>
             Measurements
           </h3>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3">
             <button
               onClick={onExportMeasurements}
-              className="p-2 text-slate-400 hover:text-cyan-400 transition-colors rounded-lg hover:bg-slate-700/50"
+              className="p-2.5 text-slate-400 hover:text-cyan-400 transition-colors rounded-xl hover:bg-slate-700/60 shadow-lg"
               title="Export measurements"
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-5 h-5" />
             </button>
             <button
               onClick={onClear}
-              className="p-2 text-slate-400 hover:text-red-400 transition-colors rounded-lg hover:bg-slate-700/50"
+              className="p-2.5 text-slate-400 hover:text-red-400 transition-colors rounded-xl hover:bg-red-600/20 shadow-lg"
               title="Clear all"
             >
-              <Trash2 className="w-4 h-4" />
+              <Trash2 className="w-5 h-5" />
             </button>
             <button
               onClick={onToggleCollapse}
-              className="p-2 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-slate-700/50"
+              className="p-2.5 text-slate-400 hover:text-white transition-colors rounded-xl hover:bg-slate-700/60 shadow-lg"
             >
-              <ChevronDown className="w-4 h-4" />
+              <ChevronDown className="w-5 h-5" />
             </button>
           </div>
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex space-x-1 bg-slate-700/50 rounded-lg p-1">
+        <div className="flex space-x-1 bg-slate-700/60 rounded-xl p-1.5">
           {[
             { key: 'all', label: 'All', icon: <Target className="w-3 h-3" /> },
             { key: 'distance', label: 'Distance', icon: <Ruler className="w-3 h-3" /> },
@@ -168,10 +172,10 @@ const AdvancedMeasurementPanel: React.FC<AdvancedMeasurementPanelProps> = ({
             <button
               key={key}
               onClick={() => setFilter(key as any)}
-              className={`px-3 py-1 rounded-md text-xs transition-all flex items-center space-x-1 ${
+              className={`px-4 py-2 rounded-lg text-sm transition-all flex items-center space-x-2 font-medium ${
                 filter === key
-                  ? 'bg-cyan-600 text-white shadow-lg'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-600/50'
+                  ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-500/25'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-600/60'
               }`}
             >
               {icon}
@@ -183,27 +187,27 @@ const AdvancedMeasurementPanel: React.FC<AdvancedMeasurementPanelProps> = ({
         {/* Statistics */}
         {stats && (
           <motion.div
-            className="mt-3 p-3 bg-slate-700/30 rounded-lg"
+            className="mt-4 p-4 bg-slate-700/40 rounded-xl backdrop-blur-sm"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             transition={{ duration: 0.3 }}
           >
-            <div className="grid grid-cols-4 gap-2 text-xs">
+            <div className="grid grid-cols-4 gap-3 text-sm">
               <div className="text-center">
-                <div className="text-slate-400">Count</div>
-                <div className="text-white font-mono">{stats.count}</div>
+                <div className="text-slate-400 font-medium">Count</div>
+                <div className="text-white font-mono font-bold text-lg">{stats.count}</div>
               </div>
               <div className="text-center">
-                <div className="text-slate-400">Avg</div>
-                <div className="text-white font-mono">{stats.avg.toFixed(1)}</div>
+                <div className="text-slate-400 font-medium">Avg</div>
+                <div className="text-white font-mono font-bold text-lg">{stats.avg.toFixed(1)}</div>
               </div>
               <div className="text-center">
-                <div className="text-slate-400">Min</div>
-                <div className="text-white font-mono">{stats.min.toFixed(1)}</div>
+                <div className="text-slate-400 font-medium">Min</div>
+                <div className="text-white font-mono font-bold text-lg">{stats.min.toFixed(1)}</div>
               </div>
               <div className="text-center">
-                <div className="text-slate-400">Max</div>
-                <div className="text-white font-mono">{stats.max.toFixed(1)}</div>
+                <div className="text-slate-400 font-medium">Max</div>
+                <div className="text-white font-mono font-bold text-lg">{stats.max.toFixed(1)}</div>
               </div>
             </div>
           </motion.div>
@@ -211,13 +215,13 @@ const AdvancedMeasurementPanel: React.FC<AdvancedMeasurementPanelProps> = ({
       </div>
 
       {/* Measurements List */}
-      <div className="max-h-80 overflow-y-auto">
+      <div className="max-h-96 overflow-y-auto">
         <AnimatePresence mode="popLayout">
           {filteredMeasurements.map((measurement, index) => (
             <motion.div
               key={measurement.id}
               className={`border-b border-slate-700/50 last:border-b-0 transition-all ${
-                selectedMeasurement === measurement.id ? 'bg-slate-700/50' : 'hover:bg-slate-700/20'
+                selectedMeasurement === measurement.id ? 'bg-slate-700/60' : 'hover:bg-slate-700/30'
               }`}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -225,73 +229,73 @@ const AdvancedMeasurementPanel: React.FC<AdvancedMeasurementPanelProps> = ({
               transition={{ duration: 0.3, delay: index * 0.05 }}
               layout
             >
-              <div className="p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center space-x-3">
-                    <div className={`p-2 rounded-lg bg-gradient-to-r ${getMeasurementColor(measurement.type)}`}>
+              <div className="p-5">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center space-x-4">
+                    <div className={`p-3 rounded-xl bg-gradient-to-r ${getMeasurementColor(measurement.type)} shadow-lg`}>
                       {getMeasurementIcon(measurement.type)}
                     </div>
                     <div>
-                      <div className="text-white font-mono text-lg font-bold">
+                      <div className="text-white font-mono text-xl font-bold">
                         {formatValue(measurement)}
                       </div>
-                      <div className="text-xs text-slate-400 capitalize">
+                      <div className="text-sm text-slate-400 capitalize font-medium">
                         {measurement.type} measurement
                       </div>
                     </div>
                   </div>
                   
-                  <div className="flex items-center space-x-1">
+                  <div className="flex items-center space-x-2">
                     <button
                       onClick={() => onHighlightMeasurement(measurement.id)}
-                      className={`p-2 rounded-lg transition-all ${
+                      className={`p-2.5 rounded-xl transition-all ${
                         measurement.highlighted
-                          ? 'bg-cyan-600 text-white'
-                          : 'text-slate-400 hover:text-cyan-400 hover:bg-slate-700/50'
+                          ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-500/25'
+                          : 'text-slate-400 hover:text-cyan-400 hover:bg-slate-700/60'
                       }`}
                       title="Highlight in viewer"
                     >
-                      <Zap className="w-4 h-4" />
+                      <Zap className="w-5 h-5" />
                     </button>
                     <button
                       onClick={() => copyMeasurement(measurement)}
-                      className="p-2 text-slate-400 hover:text-green-400 transition-colors rounded-lg hover:bg-slate-700/50"
+                      className="p-2.5 text-slate-400 hover:text-green-400 transition-colors rounded-xl hover:bg-green-600/20"
                       title="Copy measurement"
                     >
-                      <Copy className="w-4 h-4" />
+                      <Copy className="w-5 h-5" />
                     </button>
                     <button
                       onClick={() => onRemoveMeasurement(measurement.id)}
-                      className="p-2 text-slate-400 hover:text-red-400 transition-colors rounded-lg hover:bg-slate-700/50"
+                      className="p-2.5 text-slate-400 hover:text-red-400 transition-colors rounded-xl hover:bg-red-600/20"
                       title="Remove measurement"
                     >
-                      <X className="w-4 h-4" />
+                      <X className="w-5 h-5" />
                     </button>
                   </div>
                 </div>
 
                 {/* Atom sequence */}
-                <div className="flex items-center space-x-1 mb-2">
+                <div className="flex items-center space-x-2 mb-3">
                   {measurement.atoms.map((atom, i) => (
                     <React.Fragment key={i}>
-                      <span className="text-sm font-mono bg-slate-700/50 px-2 py-1 rounded text-slate-200">
+                      <span className="text-sm font-mono bg-slate-700/60 px-3 py-1.5 rounded-lg text-slate-200 font-medium">
                         {atom.residue}{atom.residueNumber}
                       </span>
                       {i < measurement.atoms.length - 1 && (
-                        <span className="text-slate-500">→</span>
+                        <span className="text-slate-500 font-bold">→</span>
                       )}
                     </React.Fragment>
                   ))}
                 </div>
 
                 {/* Timestamp */}
-                <div className="text-xs text-slate-500">
+                <div className="text-sm text-slate-500 font-medium">
                   Measured {measurement.timestamp.toLocaleTimeString()}
                 </div>
 
                 {/* Notes */}
                 {measurement.notes && (
-                  <div className="mt-2 p-2 bg-slate-700/30 rounded text-sm text-slate-300">
+                  <div className="mt-3 p-3 bg-slate-700/40 rounded-lg text-sm text-slate-300">
                     {measurement.notes}
                   </div>
                 )}
@@ -302,17 +306,17 @@ const AdvancedMeasurementPanel: React.FC<AdvancedMeasurementPanelProps> = ({
 
         {filteredMeasurements.length === 0 && (
           <motion.div
-            className="p-8 text-center"
+            className="p-12 text-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <div className="w-16 h-16 mx-auto mb-4 bg-slate-700/50 rounded-full flex items-center justify-center">
-              <Ruler className="w-8 h-8 text-slate-500" />
+            <div className="w-20 h-20 mx-auto mb-6 bg-slate-700/60 rounded-2xl flex items-center justify-center">
+              <Ruler className="w-10 h-10 text-slate-500" />
             </div>
-            <p className="text-slate-400 mb-1">
+            <p className="text-slate-400 mb-2 text-lg font-medium">
               {filter === 'all' ? 'No measurements yet' : `No ${filter} measurements`}
             </p>
-            <p className="text-sm text-slate-500">
+            <p className="text-slate-500">
               Select atoms to start measuring
             </p>
           </motion.div>

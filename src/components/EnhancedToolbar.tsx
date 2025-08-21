@@ -365,12 +365,12 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
 
         {/* Main Tools Panel */}
         <motion.div 
-          className="bg-slate-800/95 backdrop-blur-md border border-slate-700/50 rounded-xl p-3 shadow-2xl"
+          className="bg-slate-800/95 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 shadow-2xl"
           initial={{ opacity: 0, y: -20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.4, delay: 0.1, type: "spring", stiffness: 300 }}
         >
-          <div className="flex space-x-2">
+          <div className="flex space-x-3">
             {tools.map((tool, index) => (
               <motion.div
                 key={tool.id}
@@ -381,21 +381,21 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
               >
                 <motion.button
                   onClick={() => onModeChange(tool.id as any)}
-                  className={`p-3 rounded-xl transition-all border-2 relative ${getToolColor(tool.id, activeMode === tool.id)} ${
+                  className={`p-4 rounded-xl transition-all border-2 relative ${getToolColor(tool.id, activeMode === tool.id)} ${
                     activeMode === tool.id
-                      ? 'text-white shadow-lg scale-105'
-                      : 'text-slate-300 hover:text-white hover:bg-slate-600/80 hover:scale-105'
+                      ? 'text-white shadow-xl scale-105'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-600/80 hover:scale-105 hover:shadow-lg'
                   }`}
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   title={`${tool.description} (${tool.shortcut})`}
                 >
-                  <tool.icon className="w-5 h-5" />
+                  <tool.icon className="w-6 h-6" />
                   
                   {/* Active indicator */}
                   {activeMode === tool.id && (
                     <motion.div
-                      className="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full"
+                      className="absolute -top-1 -right-1 w-4 h-4 bg-white rounded-full shadow-lg"
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ type: "spring", stiffness: 400 }}
@@ -403,9 +403,9 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
                   )}
 
                   {/* Keyboard shortcut tooltip */}
-                  <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-slate-900/90 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-[10001]">
-                    <div className="font-medium">{tool.label}</div>
-                    <div className="text-slate-400">Press {tool.shortcut}</div>
+                  <div className="absolute -bottom-20 left-1/2 transform -translate-x-1/2 px-3 py-2 bg-slate-900/95 backdrop-blur-sm text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-[10001] border border-slate-700/50 shadow-xl">
+                    <div className="font-semibold">{tool.label}</div>
+                    <div className="text-slate-400 text-xs">Press {tool.shortcut}</div>
                   </div>
                 </motion.button>
               </motion.div>
@@ -414,17 +414,19 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
 
           {/* Tool status */}
           <motion.div 
-            className="mt-3 px-3 py-2 bg-slate-700/50 rounded-lg"
+            className="mt-4 px-4 py-3 bg-slate-700/60 rounded-xl backdrop-blur-sm"
             layout
             transition={{ duration: 0.2 }}
           >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2 text-sm">
-                <Info className="w-4 h-4 text-slate-400" />
-                <span className="text-slate-300">{getStatusText()}</span>
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-slate-600/50 rounded-lg flex items-center justify-center">
+                  <Info className="w-4 h-4 text-slate-400" />
+                </div>
+                <span className="text-slate-200 font-medium">{getStatusText()}</span>
               </div>
               {measurementCount > 0 && (
-                <div className="text-xs text-slate-400">
+                <div className="text-sm text-slate-400 font-medium">
                   {measurementCount} measurement{measurementCount > 1 ? 's' : ''}
                 </div>
               )}
@@ -434,33 +436,33 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
 
         {/* View Controls */}
         <motion.div 
-          className="bg-slate-800/95 backdrop-blur-md border border-slate-700/50 rounded-xl p-3 shadow-2xl"
+          className="bg-slate-800/95 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 shadow-2xl"
           initial={{ opacity: 0, y: -20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.4, delay: 0.2, type: "spring", stiffness: 300 }}
         >
-          <div className="flex space-x-2">
+          <div className="flex space-x-3">
             <div className="relative" ref={viewMenuRef}>
               <motion.button
                 onClick={() => setShowViewMenu(!showViewMenu)}
-                className="p-3 rounded-xl bg-slate-700/50 hover:bg-slate-600/50 text-slate-300 hover:text-white transition-all border border-slate-600 flex items-center space-x-2"
+                className="p-4 rounded-xl bg-slate-700/60 hover:bg-slate-600/60 text-slate-300 hover:text-white transition-all border border-slate-600 flex items-center space-x-3 shadow-lg hover:shadow-xl"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Layers className="w-5 h-5" />
-                <span className="text-sm">{viewModes.find(v => v.id === viewMode)?.label || 'View'}</span>
-                <ChevronDown className="w-4 h-4" />
+                <Layers className="w-6 h-6" />
+                <span className="text-sm font-medium">{viewModes.find(v => v.id === viewMode)?.label || 'View'}</span>
+                <ChevronDown className="w-5 h-5" />
               </motion.button>
             </div>
 
             <motion.button
               onClick={onClearMeasurements}
-              className="p-3 rounded-xl bg-red-600/20 hover:bg-red-600/30 text-red-400 hover:text-red-300 transition-all border border-red-600/30"
+              className="p-4 rounded-xl bg-red-600/20 hover:bg-red-600/30 text-red-400 hover:text-red-300 transition-all border border-red-600/30 shadow-lg hover:shadow-red-500/25"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               title="Clear all measurements"
             >
-              <Trash2 className="w-5 h-5" />
+              <Trash2 className="w-6 h-6" />
             </motion.button>
           </div>
         </motion.div>
@@ -468,23 +470,23 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
         {/* Quick Stats */}
         {(selectedAtomsCount > 0 || measurementCount > 0) && (
           <motion.div 
-            className="bg-slate-800/95 backdrop-blur-md border border-slate-700/50 rounded-xl p-3 shadow-2xl"
+            className="bg-slate-800/95 backdrop-blur-md border border-slate-700/50 rounded-2xl p-4 shadow-2xl"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="space-y-2 text-sm">
+            <div className="space-y-3">
               {selectedAtomsCount > 0 && (
-                <div className="flex items-center justify-between text-slate-300">
-                  <span>Selected:</span>
-                  <span className="font-mono font-bold text-cyan-400">{selectedAtomsCount}</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-300 font-medium">Selected:</span>
+                  <span className="font-mono font-bold text-cyan-400 text-lg">{selectedAtomsCount}</span>
                 </div>
               )}
               {measurementCount > 0 && (
-                <div className="flex items-center justify-between text-slate-300">
-                  <span>Measurements:</span>
-                  <span className="font-mono font-bold text-orange-400">{measurementCount}</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-300 font-medium">Measurements:</span>
+                  <span className="font-mono font-bold text-orange-400 text-lg">{measurementCount}</span>
                 </div>
               )}
             </div>

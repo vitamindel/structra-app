@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Upload, File, AlertCircle, CheckCircle } from 'lucide-react';
+import { Upload, File, AlertCircle, CheckCircle, CloudUpload, Sparkles } from 'lucide-react';
 
 interface FileUploadProps {
   onProteinLoaded: (proteinId: string) => void;
@@ -70,19 +70,19 @@ const FileUpload: React.FC<FileUploadProps> = ({ onProteinLoaded }) => {
   return (
     <div className="space-y-4">
       <motion.div
-        className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
+        className={`border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all backdrop-blur-sm ${
           isDragging 
-            ? 'border-primary-400 bg-primary-400/10' 
+            ? 'border-cyan-400 bg-cyan-400/15 shadow-lg shadow-cyan-400/25' 
             : success
-            ? 'border-green-400 bg-green-400/10'
+            ? 'border-green-400 bg-green-400/15 shadow-lg shadow-green-400/25'
             : error
-            ? 'border-red-400 bg-red-400/10'
-            : 'border-slate-600 hover:border-slate-500 hover:bg-slate-700/20'
+            ? 'border-red-400 bg-red-400/15 shadow-lg shadow-red-400/25'
+            : 'border-slate-600 hover:border-cyan-500/50 hover:bg-slate-700/30'
         }`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        whileHover={{ scale: 1.02 }}
+        whileHover={{ scale: 1.01, y: -2 }}
         whileTap={{ scale: 0.98 }}
       >
         <input
@@ -95,30 +95,41 @@ const FileUpload: React.FC<FileUploadProps> = ({ onProteinLoaded }) => {
         />
         
         <label htmlFor="file-upload" className="cursor-pointer">
-          <div className="flex flex-col items-center space-y-4">
+          <div className="flex flex-col items-center space-y-6">
             {uploading ? (
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                className="relative"
               >
-                <Upload className="w-12 h-12 text-primary-400" />
+                <CloudUpload className="w-16 h-16 text-cyan-400" />
+                <div className="absolute inset-0 bg-cyan-400/20 rounded-full blur-xl animate-pulse" />
               </motion.div>
             ) : success ? (
-              <CheckCircle className="w-12 h-12 text-green-400" />
+              <div className="relative">
+                <CheckCircle className="w-16 h-16 text-green-400" />
+                <div className="absolute inset-0 bg-green-400/20 rounded-full blur-xl animate-pulse" />
+              </div>
             ) : error ? (
-              <AlertCircle className="w-12 h-12 text-red-400" />
+              <div className="relative">
+                <AlertCircle className="w-16 h-16 text-red-400" />
+                <div className="absolute inset-0 bg-red-400/20 rounded-full blur-xl animate-pulse" />
+              </div>
             ) : (
-              <File className="w-12 h-12 text-slate-400" />
+              <div className="relative">
+                <File className="w-16 h-16 text-slate-400" />
+                <Sparkles className="w-6 h-6 text-cyan-400 absolute -top-2 -right-2" />
+              </div>
             )}
             
             <div>
-              <p className="text-lg font-medium text-white mb-1">
+              <p className="text-xl font-semibold text-white mb-2">
                 {uploading ? 'Processing...' : 
                  success ? 'Upload Complete!' :
                  error ? 'Upload Failed' :
                  'Drop your .pdb file here'}
               </p>
-              <p className="text-sm text-slate-400">
+              <p className="text-base text-slate-400">
                 {uploading ? 'Analyzing structure...' :
                  success ? 'Redirecting to viewer...' :
                  error ? error :
@@ -129,8 +140,8 @@ const FileUpload: React.FC<FileUploadProps> = ({ onProteinLoaded }) => {
         </label>
       </motion.div>
 
-      <div className="text-center">
-        <p className="text-xs text-slate-500">
+      <div className="text-center bg-slate-800/30 rounded-xl p-4 backdrop-blur-sm">
+        <p className="text-sm text-slate-500 font-medium">
           Supported formats: .pdb, .cif • Max file size: 50MB
         </p>
       </div>

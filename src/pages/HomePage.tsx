@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Upload, Search, Atom, Users, MessageSquare, Share2, Zap, Database, Microscope, Dna, User, LogOut } from 'lucide-react';
+import { Upload, Search, Atom, Users, MessageSquare, Share2, Zap, Database, Microscope, Dna, User, LogOut, Star, ArrowRight, ChevronDown, Play, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import FileUpload from '../components/FileUpload';
 import PDBInput from '../components/PDBInput';
@@ -101,7 +101,7 @@ const HomePage: React.FC = () => {
       <ParticleBackground />
       
       {/* Navigation */}
-      <nav className="relative z-10 px-6 py-4">
+      <nav className="relative z-10 px-6 py-6 backdrop-blur-sm bg-slate-900/20 border-b border-slate-800/50">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <motion.div 
             className="flex items-center space-x-3"
@@ -110,17 +110,23 @@ const HomePage: React.FC = () => {
             transition={{ duration: 0.6 }}
           >
             <div className="relative">
-              <Dna className="h-8 w-8 text-cyan-400" />
+              <div className="relative">
+                <Dna className="h-10 w-10 text-cyan-400 drop-shadow-lg" />
+                <div className="absolute inset-0 bg-cyan-400/20 rounded-full blur-xl animate-pulse" />
+              </div>
               <motion.div
-                className="absolute inset-0"
+                className="absolute inset-0 opacity-60"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
               >
-                <Atom className="h-8 w-8 text-cyan-400 opacity-30" />
+                <Atom className="h-10 w-10 text-blue-400 opacity-40" />
               </motion.div>
             </div>
-            <h1 className="text-2xl font-bold text-white">Structra</h1>
-            <span className="text-xs bg-cyan-600/20 text-cyan-300 px-2 py-1 rounded-full">
+            <div className="flex flex-col">
+              <h1 className="text-3xl font-bold text-white tracking-tight">Structra</h1>
+              <span className="text-xs text-cyan-400/80 font-medium">Molecular Visualization</span>
+            </div>
+            <span className="text-xs bg-gradient-to-r from-cyan-600/30 to-blue-600/30 text-cyan-300 px-3 py-1.5 rounded-full border border-cyan-500/30 backdrop-blur-sm">
               PDB Viewer
             </span>
           </motion.div>
@@ -133,12 +139,15 @@ const HomePage: React.FC = () => {
           >
             {isAuthenticated ? (
               <div className="flex items-center space-x-3">
-                <span className="text-slate-300">Welcome, {user?.firstName}!</span>
+                <div className="flex items-center space-x-2 px-3 py-2 bg-slate-800/50 rounded-lg border border-slate-700/50 backdrop-blur-sm">
+                  <Sparkles className="w-4 h-4 text-cyan-400" />
+                  <span className="text-slate-200 font-medium">Welcome, {user?.firstName}!</span>
+                </div>
                 <button
                   onClick={() => setProfileOpen(true)}
-                  className="flex items-center space-x-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white px-4 py-2 rounded-lg transition-all"
+                  className="flex items-center space-x-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white px-4 py-2.5 rounded-xl transition-all shadow-lg hover:shadow-cyan-500/25 hover:scale-105"
                 >
-                  <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center text-xs font-bold">
+                  <div className="w-6 h-6 bg-white/30 rounded-full flex items-center justify-center text-xs font-bold backdrop-blur-sm">
                     {user?.avatar}
                   </div>
                   <span>Profile</span>
@@ -148,15 +157,16 @@ const HomePage: React.FC = () => {
               <>
                 <button 
                   onClick={handleSignInClick}
-                  className="text-slate-300 hover:text-white transition-colors"
+                  className="text-slate-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:bg-slate-800/50"
                 >
                   Sign In
                 </button>
                 <button 
                   onClick={handleGetStartedClick}
-                  className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white px-4 py-2 rounded-lg transition-all"
+                  className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white px-6 py-2.5 rounded-xl transition-all shadow-lg hover:shadow-cyan-500/25 hover:scale-105 flex items-center space-x-2"
                 >
-                  Get Started
+                  <span>Get Started</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </>
             )}
@@ -165,31 +175,41 @@ const HomePage: React.FC = () => {
       </nav>
 
       {/* Hero Section */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-12 pb-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-16 pb-24">
         <div className="text-center">
           <motion.h1 
-            className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight"
+            className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            Visualize Proteins.
+            <span className="relative">
+              Visualize Proteins.
+              <motion.div
+                className="absolute -top-4 -right-4 w-8 h-8"
+                animate={{ rotate: [0, 360], scale: [1, 1.2, 1] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                <Sparkles className="w-8 h-8 text-yellow-400" />
+              </motion.div>
+            </span>
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 drop-shadow-2xl">
               Discover Biology.
             </span>
           </motion.h1>
           
           <motion.p 
-            className="text-xl text-slate-300 mb-12 max-w-4xl mx-auto leading-relaxed"
+            className="text-xl md:text-2xl text-slate-300 mb-16 max-w-4xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            Professional-grade protein structure visualization powered by real PDB data. 
-            Load any protein structure with a simple 4-letter ID and explore it in stunning 3D ribbon representation.
+            <span className="text-slate-200 font-medium">Professional-grade protein structure visualization</span> powered by real PDB data. 
+            Load any protein structure with a simple 4-letter ID and explore it in <span className="text-cyan-400 font-semibold">stunning 3D ribbon representation</span>.
             {isAuthenticated && (
-              <span className="block mt-2 text-cyan-300">
+              <span className="block mt-4 text-cyan-300 bg-cyan-900/20 px-4 py-2 rounded-lg border border-cyan-500/30 backdrop-blur-sm">
+                <Star className="w-4 h-4 inline mr-2" />
                 Welcome back, {user?.firstName}! Your saved structures and measurements are ready.
               </span>
             )}
@@ -197,33 +217,44 @@ const HomePage: React.FC = () => {
 
           {/* Main Input Section */}
           <motion.div 
-            className="main-input-section max-w-2xl mx-auto bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8 mb-16"
+            className="main-input-section max-w-2xl mx-auto bg-slate-800/60 backdrop-blur-md rounded-3xl border border-slate-700/60 p-10 mb-20 shadow-2xl shadow-slate-900/50"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
             {!isAuthenticated && (
-              <div className="mb-6 p-4 bg-cyan-600/20 border border-cyan-600/30 rounded-lg">
-                <p className="text-cyan-300 text-sm">
+              <motion.div 
+                className="mb-8 p-6 bg-gradient-to-r from-cyan-600/20 to-blue-600/20 border border-cyan-500/40 rounded-2xl backdrop-blur-sm"
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className="w-8 h-8 bg-cyan-500/30 rounded-full flex items-center justify-center">
+                    <Star className="w-4 h-4 text-cyan-300" />
+                  </div>
+                  <p className="text-cyan-200 font-semibold">Unlock Premium Features</p>
+                </div>
+                <p className="text-cyan-300/90 text-sm leading-relaxed">
                   <strong>Sign up for free</strong> to save your work, collaborate with others, and access advanced features!
                 </p>
                 <button
                   onClick={handleGetStartedClick}
-                  className="mt-2 text-cyan-400 hover:text-cyan-300 text-sm font-medium"
+                  className="mt-4 text-cyan-400 hover:text-cyan-300 text-sm font-medium flex items-center space-x-1 hover:space-x-2 transition-all"
                 >
-                  Create Account →
+                  <span>Create Account</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
-              </div>
+              </motion.div>
             )}
 
-            <div className="flex justify-center mb-6">
-              <div className="flex bg-slate-700/50 rounded-lg p-1">
+            <div className="flex justify-center mb-8">
+              <div className="flex bg-slate-700/60 rounded-xl p-1.5 backdrop-blur-sm border border-slate-600/50">
                 <button
                   onClick={() => setActiveTab('pdb')}
-                  className={`px-6 py-3 rounded-md transition-all flex items-center space-x-2 ${
+                  className={`px-8 py-3.5 rounded-lg transition-all flex items-center space-x-2 font-medium ${
                     activeTab === 'pdb'
-                      ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg'
-                      : 'text-slate-300 hover:text-white'
+                      ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-500/25'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-600/50'
                   }`}
                 >
                   <Database className="w-4 h-4" />
@@ -231,10 +262,10 @@ const HomePage: React.FC = () => {
                 </button>
                 <button
                   onClick={() => setActiveTab('upload')}
-                  className={`px-6 py-3 rounded-md transition-all flex items-center space-x-2 ${
+                  className={`px-8 py-3.5 rounded-lg transition-all flex items-center space-x-2 font-medium ${
                     activeTab === 'upload'
-                      ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg'
-                      : 'text-slate-300 hover:text-white'
+                      ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-500/25'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-600/50'
                   }`}
                 >
                   <Upload className="w-4 h-4" />
@@ -253,30 +284,43 @@ const HomePage: React.FC = () => {
           {/* User's Recent Activity (if authenticated) */}
           {isAuthenticated && user?.savedProteins && user.savedProteins.length > 0 && (
             <motion.div
-              className="mb-16"
+              className="mb-20"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-              <h3 className="text-2xl font-bold text-white mb-8">Your Recent Structures</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="flex items-center justify-center space-x-3 mb-10">
+                <div className="h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent flex-1" />
+                <h3 className="text-3xl font-bold text-white flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center">
+                    <Database className="w-4 h-4 text-white" />
+                  </div>
+                  <span>Your Recent Structures</span>
+                </h3>
+                <div className="h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent flex-1" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {user.savedProteins.slice(0, 3).map((proteinId, index) => (
                   <motion.button
                     key={proteinId}
                     onClick={() => handleProteinLoaded(proteinId)}
-                    className="group relative p-6 bg-slate-800/30 backdrop-blur-sm rounded-xl border border-slate-700/30 hover:border-slate-600/50 transition-all duration-300 text-left"
-                    whileHover={{ y: -5, scale: 1.02 }}
+                    className="group relative p-8 bg-slate-800/40 backdrop-blur-md rounded-2xl border border-slate-700/40 hover:border-cyan-500/50 transition-all duration-300 text-left overflow-hidden"
+                    whileHover={{ y: -8, scale: 1.03 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
-                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <Database className="w-6 h-6 text-white" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="relative">
+                      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 mb-6 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                        <Database className="w-7 h-7 text-white" />
+                      </div>
+                      <div className="font-mono font-bold text-cyan-400 text-xl mb-2 group-hover:text-cyan-300 transition-colors">
+                        {proteinId.toUpperCase()}
+                      </div>
+                      <p className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors flex items-center space-x-2">
+                        <span>Recently viewed</span>
+                        <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </p>
                     </div>
-                    <div className="font-mono font-bold text-cyan-400 text-lg mb-1">
-                      {proteinId.toUpperCase()}
-                    </div>
-                    <p className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors">
-                      Recently viewed
-                    </p>
                   </motion.button>
                 ))}
               </div>
@@ -285,39 +329,49 @@ const HomePage: React.FC = () => {
 
           {/* Showcase Proteins */}
           <motion.div
-            className="mb-16"
+            className="mb-20"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.9 }}
           >
-            <h3 className="text-2xl font-bold text-white mb-8">Featured Structures</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="flex items-center justify-center space-x-3 mb-12">
+              <div className="h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent flex-1" />
+              <h3 className="text-3xl font-bold text-white flex items-center space-x-3">
+                <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                  <Star className="w-4 h-4 text-white" />
+                </div>
+                <span>Featured Structures</span>
+              </h3>
+              <div className="h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent flex-1" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {showcaseProteins.map((protein, index) => (
                 <motion.button
                   key={protein.id}
                   onClick={() => handleProteinLoaded(protein.id)}
-                  className="group relative p-6 bg-slate-800/30 backdrop-blur-sm rounded-xl border border-slate-700/30 hover:border-slate-600/50 transition-all duration-300 text-left"
-                  whileHover={{ y: -5, scale: 1.02 }}
+                  className="group relative p-8 bg-slate-800/40 backdrop-blur-md rounded-2xl border border-slate-700/40 hover:border-slate-600/60 transition-all duration-300 text-left overflow-hidden"
+                  whileHover={{ y: -8, scale: 1.03 }}
                   transition={{ type: "spring", stiffness: 300 }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   style={{ transitionDelay: `${index * 100}ms` }}
                 >
-                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${protein.color} mb-4 flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                    <Atom className="w-6 h-6 text-white" />
+                  <div className={`absolute inset-0 bg-gradient-to-br ${protein.color} opacity-5 group-hover:opacity-10 transition-opacity duration-300`} />
+                  <div className="relative">
+                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${protein.color} mb-6 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg`}>
+                      <Atom className="w-7 h-7 text-white" />
+                    </div>
+                    <div className="font-mono font-bold text-cyan-400 text-xl mb-2 group-hover:text-cyan-300 transition-colors">
+                      {protein.id}
+                    </div>
+                    <h4 className="font-semibold text-white mb-3 group-hover:text-cyan-300 transition-colors text-lg">
+                      {protein.name}
+                    </h4>
+                    <p className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors flex items-center space-x-2">
+                      <span>{protein.description}</span>
+                      <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </p>
                   </div>
-                  <div className="font-mono font-bold text-cyan-400 text-lg mb-1">
-                    {protein.id}
-                  </div>
-                  <h4 className="font-semibold text-white mb-2 group-hover:text-cyan-300 transition-colors">
-                    {protein.name}
-                  </h4>
-                  <p className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors">
-                    {protein.description}
-                  </p>
-                  
-                  {/* Hover overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-600/10 to-blue-600/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                 </motion.button>
               ))}
             </div>
@@ -326,9 +380,19 @@ const HomePage: React.FC = () => {
       </div>
 
       {/* Features Section */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pb-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pb-24">
+        <div className="flex items-center justify-center space-x-3 mb-16">
+          <div className="h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent flex-1" />
+          <h2 className="text-4xl font-bold text-white flex items-center space-x-3">
+            <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-teal-500 rounded-xl flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-white" />
+            </div>
+            <span>Powerful Features</span>
+          </h2>
+          <div className="h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent flex-1" />
+        </div>
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.1 }}
@@ -336,36 +400,41 @@ const HomePage: React.FC = () => {
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              className="bg-slate-800/30 backdrop-blur-sm rounded-xl border border-slate-700/30 p-6 hover:bg-slate-800/50 transition-all duration-300 group"
-              whileHover={{ y: -5, scale: 1.02 }}
+              className="bg-slate-800/40 backdrop-blur-md rounded-2xl border border-slate-700/40 p-8 hover:bg-slate-800/60 hover:border-slate-600/60 transition-all duration-300 group overflow-hidden relative"
+              whileHover={{ y: -8, scale: 1.03 }}
               transition={{ type: "spring", stiffness: 300 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <feature.icon className="h-6 w-6 text-white" />
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-600/5 to-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative">
+                <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg">
+                  <feature.icon className="h-7 w-7 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-4 group-hover:text-cyan-300 transition-colors">
+                  {feature.title}
+                </h3>
+                <p className="text-slate-400 text-sm leading-relaxed group-hover:text-slate-300 transition-colors">
+                  {feature.description}
+                </p>
               </div>
-              <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-cyan-300 transition-colors">
-                {feature.title}
-              </h3>
-              <p className="text-slate-400 text-sm leading-relaxed group-hover:text-slate-300 transition-colors">
-                {feature.description}
-              </p>
             </motion.div>
           ))}
         </motion.div>
       </div>
 
       {/* Footer */}
-      <div className="relative z-10 border-t border-slate-700/50 bg-slate-800/30 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="relative z-10 border-t border-slate-700/60 bg-slate-800/40 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2 text-slate-400">
-              <Database className="w-4 h-4" />
-              <span className="text-sm">Powered by RCSB Protein Data Bank</span>
+            <div className="flex items-center space-x-3 text-slate-400">
+              <div className="w-8 h-8 bg-slate-700/50 rounded-lg flex items-center justify-center">
+                <Database className="w-4 h-4" />
+              </div>
+              <span className="text-sm font-medium">Powered by RCSB Protein Data Bank</span>
             </div>
-            <div className="text-sm text-slate-500">
+            <div className="text-sm text-slate-500 font-medium">
               Built for structural biology research
             </div>
           </div>
