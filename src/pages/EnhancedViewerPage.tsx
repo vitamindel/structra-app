@@ -706,29 +706,34 @@ const EnhancedViewerPage: React.FC = () => {
 
       {/* Header Bar */}
       <motion.div 
-        className="absolute top-0 left-0 right-0 z-30 bg-slate-800/80 backdrop-blur-md border-b border-slate-700/50"
+        className="absolute top-0 left-0 right-0 z-30 bg-slate-800/90 backdrop-blur-md border-b border-slate-700/60 shadow-lg"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <div className="flex items-center justify-between px-6 py-3">
+        <div className="flex items-center justify-between px-6 py-4">
           <div className="flex items-center space-x-4">
             <button
               onClick={() => navigate('/')}
-              className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors"
+              className="flex items-center space-x-3 text-slate-300 hover:text-white transition-colors px-3 py-2 rounded-xl hover:bg-slate-700/50"
             >
-              <Home className="w-5 h-5" />
-              <span className="font-medium">Structra</span>
+              <div className="relative">
+                <Home className="w-6 h-6" />
+                <div className="absolute inset-0 bg-cyan-400/20 rounded-full blur-lg opacity-0 hover:opacity-100 transition-opacity" />
+              </div>
+              <span className="font-bold text-lg">Structra</span>
             </button>
             
-            <div className="h-6 w-px bg-slate-600" />
+            <div className="h-8 w-px bg-slate-600" />
             
-            <div className="flex items-center space-x-3">
-              <Database className="w-5 h-5 text-cyan-400" />
-              <div className="text-white font-mono font-bold text-lg">
+            <div className="flex items-center space-x-4">
+              <div className="w-10 h-10 bg-cyan-600/30 rounded-xl flex items-center justify-center">
+                <Database className="w-5 h-5 text-cyan-400" />
+              </div>
+              <div className="text-white font-mono font-bold text-xl">
                 {proteinId?.toUpperCase() || 'Loading...'}
               </div>
-              <div className="px-2 py-1 bg-cyan-600/20 text-cyan-300 text-xs rounded-full">
+              <div className="px-3 py-1.5 bg-cyan-600/30 text-cyan-300 text-sm rounded-full border border-cyan-500/30 font-medium">
                 {viewMode}
               </div>
             </div>
@@ -738,21 +743,21 @@ const EnhancedViewerPage: React.FC = () => {
             {/* Search Button */}
             <button
               onClick={() => setShowSearch(true)}
-              className="relative p-2 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-slate-700/50 dropdown-container"
+              className="relative p-3 text-slate-400 hover:text-white transition-colors rounded-xl hover:bg-slate-700/60 dropdown-container shadow-lg"
               title="Search (Ctrl+K)"
             >
-              <Search className="w-5 h-5" />
+              <Search className="w-6 h-6" />
             </button>
 
             {/* Notifications Button */}
             <button
               onClick={() => setShowNotifications(!showNotifications)}
-              className="relative p-2 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-slate-700/50 dropdown-container"
+              className="relative p-3 text-slate-400 hover:text-white transition-colors rounded-xl hover:bg-slate-700/60 dropdown-container shadow-lg"
               title="Notifications"
             >
-              <Bell className="w-5 h-5" />
+              <Bell className="w-6 h-6" />
               {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold shadow-lg">
                   {unreadCount > 9 ? '9+' : unreadCount}
                 </span>
               )}
@@ -761,34 +766,34 @@ const EnhancedViewerPage: React.FC = () => {
             {/* Collaborators Button */}
             <button
               onClick={() => setShowCollaborators(!showCollaborators)}
-              className="p-2 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-slate-700/50 dropdown-container"
+              className="p-3 text-slate-400 hover:text-white transition-colors rounded-xl hover:bg-slate-700/60 dropdown-container shadow-lg"
               title="Collaborators"
             >
-              <Users className="w-5 h-5" />
+              <Users className="w-6 h-6" />
             </button>
 
             {/* User Menu or Auth Buttons */}
             {isAuthenticated ? (
               <button
                 onClick={() => setShowUserMenu(!showUserMenu)}
-                className="flex items-center space-x-2 p-2 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-slate-700/50 dropdown-container"
+                className="flex items-center space-x-3 p-3 text-slate-400 hover:text-white transition-colors rounded-xl hover:bg-slate-700/60 dropdown-container shadow-lg"
                 title="User Menu"
               >
-                <div className="w-6 h-6 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg">
                   {user?.avatar}
                 </div>
               </button>
             ) : (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
                 <button
                   onClick={() => navigate('/')}
-                  className="text-slate-400 hover:text-white transition-colors text-sm"
+                  className="text-slate-400 hover:text-white transition-colors text-sm px-3 py-2 rounded-lg hover:bg-slate-700/50"
                 >
                   Sign In
                 </button>
                 <button
                   onClick={() => navigate('/')}
-                  className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white px-3 py-1 rounded-lg transition-all text-sm"
+                  className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white px-4 py-2 rounded-xl transition-all text-sm shadow-lg hover:shadow-cyan-500/25"
                 >
                   Sign Up
                 </button>
@@ -798,19 +803,19 @@ const EnhancedViewerPage: React.FC = () => {
             {/* Settings Button */}
             <button
               onClick={() => setSettingsOpen(true)}
-              className="p-2 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-slate-700/50"
+              className="p-3 text-slate-400 hover:text-white transition-colors rounded-xl hover:bg-slate-700/60 shadow-lg"
               title="Settings"
             >
-              <Settings className="w-5 h-5" />
+              <Settings className="w-6 h-6" />
             </button>
 
             {/* Fullscreen Button */}
             <button
               onClick={toggleFullscreen}
-              className="p-2 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-slate-700/50"
+              className="p-3 text-slate-400 hover:text-white transition-colors rounded-xl hover:bg-slate-700/60 shadow-lg"
               title="Toggle Fullscreen"
             >
-              {isFullscreen ? <Minimize2 className="w-5 h-5" /> : <Maximize2 className="w-5 h-5" />}
+              {isFullscreen ? <Minimize2 className="w-6 h-6" /> : <Maximize2 className="w-6 h-6" />}
             </button>
           </div>
         </div>
@@ -847,31 +852,33 @@ const EnhancedViewerPage: React.FC = () => {
         {/* Atom Info Panel - positioned above measurements */}
         {selectedAtoms.length > 0 && (
           <motion.div
-            className="absolute bottom-4 right-4 z-25 bg-slate-800/90 backdrop-blur-md border border-slate-600/50 rounded-xl p-4 max-w-xs"
+            className="absolute bottom-6 right-6 z-25 bg-slate-800/95 backdrop-blur-md border border-slate-600/60 rounded-2xl p-6 max-w-sm shadow-2xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
           >
-            <h3 className="text-white font-semibold mb-3 flex items-center">
-              <div 
-                className="w-3 h-3 rounded-full mr-2"
-                style={{ backgroundColor: '#06b6d4' }}
-              />
+            <h3 className="text-white font-bold text-lg mb-4 flex items-center">
+              <div className="w-8 h-8 bg-cyan-600/30 rounded-lg flex items-center justify-center mr-3">
+                <div 
+                  className="w-4 h-4 rounded-full"
+                  style={{ backgroundColor: '#06b6d4' }}
+                />
+              </div>
               Selected Atom
             </h3>
-            <div className="space-y-2 text-sm">
-              <div className="grid grid-cols-2 gap-2">
-                <div className="text-slate-400">Element:</div>
-                <div className="text-white font-mono">{selectedAtoms[0].element}</div>
-                <div className="text-slate-400">Residue:</div>
-                <div className="text-white font-mono">{selectedAtoms[0].residue}{selectedAtoms[0].residueNumber}</div>
-                <div className="text-slate-400">Chain:</div>
-                <div className="text-white font-mono">{selectedAtoms[0].chain}</div>
-                <div className="text-slate-400">Atom Name:</div>
-                <div className="text-white font-mono">{selectedAtoms[0].atomName}</div>
+            <div className="space-y-3">
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="text-slate-400 font-medium">Element:</div>
+                <div className="text-white font-mono font-bold">{selectedAtoms[0].element}</div>
+                <div className="text-slate-400 font-medium">Residue:</div>
+                <div className="text-white font-mono font-bold">{selectedAtoms[0].residue}{selectedAtoms[0].residueNumber}</div>
+                <div className="text-slate-400 font-medium">Chain:</div>
+                <div className="text-white font-mono font-bold">{selectedAtoms[0].chain}</div>
+                <div className="text-slate-400 font-medium">Atom Name:</div>
+                <div className="text-white font-mono font-bold">{selectedAtoms[0].atomName}</div>
               </div>
-              <div className="pt-2 border-t border-slate-600/50">
-                <div className="text-xs text-slate-400 space-y-1">
+              <div className="pt-3 border-t border-slate-600/60">
+                <div className="text-sm text-slate-400 space-y-1">
                   <div>Coordinates: ({selectedAtoms[0].x.toFixed(2)}, {selectedAtoms[0].y.toFixed(2)}, {selectedAtoms[0].z.toFixed(2)})</div>
                 </div>
               </div>
