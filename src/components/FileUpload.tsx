@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Upload, File, AlertCircle, CheckCircle, CloudUpload, Sparkles } from 'lucide-react';
+import { Upload, File, AlertCircle, CheckCircle, UploadCloud as CloudUpload, Sparkles } from 'lucide-react';
 
 interface FileUploadProps {
   onProteinLoaded: (proteinId: string) => void;
